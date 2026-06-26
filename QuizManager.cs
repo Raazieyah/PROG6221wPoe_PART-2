@@ -127,7 +127,7 @@ namespace CyberSecurityChatbot
                 "C",
                 "Correct! "
             ),
-            // You can add your other modeled questions below in the same format
+            
         };
             }
 
