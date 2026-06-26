@@ -5,42 +5,126 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CyberSecurityChatbot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"/>
+
+
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+     
+    <StackPanel Grid.Row="0" Margin="10">
+        <TextBlock Text="Cyberbot" Foreground="Cyan" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Text= "" Foreground="White" FontFamily="Consolas"/>
+    </StackPanel>
+
+    
+    <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollBarVisibility="Auto">
+        <TextBlock x:Name="ChatDisplay" TextWrapping="Wrap" Foreground="White" />
+    </ScrollViewer>
+
    
+    <Grid Grid.Row="2" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="InputBox" Grid.Column="0" Margin="0,0,10,0" 
+                     KeyDown="InputBox_KeyDown" />
+        
+
+        <Button Content="Send" Grid.Column="1" Width="75" Click="SendButton_Click"/>
+    </Grid>
+
+</Grid>
+
+
+<Window x:Class="TaskAssistant.MainWindow"
+        xmlns="http://microsoft.com"
+        xmlns:x="http://microsoft.com"
+        Title="Task Assistant" Height="450" Width="600">
+    <StackPanel Margin="10">
+        
+        <TextBlock Text="Title:"/>
+        <TextBox x:Name="txtTitle" Margin="0,0,0,5"/>
+
+        <TextBlock Text="Description:"/>
+        <TextBox x:Name="txtDescription" Margin="0,0,0,5"/>
+
+        <TextBlock Text="Reminder (e.g. 7 days):"/>
+        <TextBox x:Name="txtReminder" Margin="0,0,0,10"/>
+
+        
+        
+        <Button Content="Add Task" Click="AddTask_Click" Margin="0,0,0,10"/>
+
        
-        <Grid>
-            <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+        <DataGrid x:Name="dgTasks" AutoGenerateColumns="False" Height="150" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                <DataGridTextColumn Header="Reminder" Binding="{Binding Reminder}" Width="*"/>
+                <DataGridCheckBoxColumn Header="Done" Binding="{Binding IsCompleted}" Width="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+        <Button Content="Mark Complete" Click="CompleteTask_Click" Width="100" Margin="0,0,5,0"/>
+        <Button Content="Delete Task" Click="DeleteTask_Click" Width="100" Background="LightCoral"/>
+    </StackPanel>
+    
+</Window>
+
+<Window x:Class="QuizApp.MainWindow"
+        xmlns="http://microsoft.com"
+        xmlns:x="http://microsoft.com"
+        Title="Cybersecurity Quiz" Height="450" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>          
+            <RowDefinition Height="*"/>           
+            <RowDefinition Height="Auto"/>           
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-            <!--Header -->
-            <StackPanel Grid.Row="0" Margin="10">
-                <TextBlock Text="Cyberbot" Foreground="Cyan" FontSize="20" FontWeight="Bold"/>
-                <TextBlock Text= @"" Foreground="White" FontFamily="Consolas"/>
+        
+        <TextBlock x:Name="ScoreTracker" Grid.Row0="0" Text="Score: 0" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold"/>
+
+        
+        <StackPanel x:Name="QuizPanel" Grid.Row="1" VerticalAlignment="Center">
+            
+            <TextBlock x:Name="QuestionTextBlock" Text="Question text goes here..." TextWrapping="Wrap" FontSize="16" Margin="0,0,0,20" FontWeight="SemiBold"/>
+
+            
+            <StackPanel x:Name="OptionsPanel" Margin="10,0,0,20">
+                <RadioButton x:Name="RadioA" Content="Option A" GroupName="QuizOptions" Margin="0,5" FontSize="14"/>
+                <RadioButton x:Name="RadioB" Content="Option B" GroupName="QuizOptions" Margin="0,5" FontSize="14"/>
+                <RadioButton x:Name="RadioC" Content="Option C" GroupName="QuizOptions" Margin="0,5" FontSize="14"/>
+                <RadioButton x:Name="RadioD" Content="Option D" GroupName="QuizOptions" Margin="0,5" FontSize="14"/>
             </StackPanel>
+        </StackPanel>
 
-            <!-- Chat Display -->
-            <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollBarVisibility="Auto">
-                <TextBlock x:Name="ChatDisplay" TextWrapping="Wrap" Foreground="White" />
-            </ScrollViewer>
+       
+        <StackPanel x:Name="FinalResultsPanel" Grid.Row="1" VerticalAlignment="Center" Visibility="Collapsed">
+            <TextBlock Text="Quiz Completed!" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Foreground="Green" Margin="0,0,0,10"/>
+            <TextBlock x:Name="FinalScoreTextBlock" Text="Your Score: 0 out of 16" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock x:Name="FinalMessageTextBlock" Text="Great job!" FontSize="16" HorizontalAlignment="Center" FontStyle="Italic"/>
+        </StackPanel>
 
-            <!-- Input Controls -->
-            <Grid Grid.Row="2" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+       
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button x:Name="SubmitButton" Content="Submit Answer" Width="120" Height="35" Click="SubmitButton_Click"/>            
+            <Button x:Name="NextButton" Content="Next Question" Width="120" Height="35" Margin="10,0,0,0" Click="NextButton_Click" Visibility="Collapsed"/>
+        </StackPanel>
 
-                <TextBox x:Name="InputBox" Grid.Column="0" Margin="0,0,10,0" 
-                     KeyDown="InputBox_KeyDown" />
-                <!-- Event handler for Enter -->
-
-                <Button Content="Send" Grid.Column="1" Width="75" Click="SendButton_Click"/>
-            </Grid>
-
-        </Grid>
-    </Window>
-
+        
+        <Border x:Name="FeedbackBorder" Grid.Row="3" Background="#F0F0F0" CornerRadius="5" Padding="10" Visibility="Collapsed" Margin="0,10,0,0">
+            <TextBlock x:Name="FeedbackTextBlock" Text="Feedback message..." TextWrapping="Wrap" FontSize="14"/>
+        </Border>
+    </Grid>
+</Window>
 
